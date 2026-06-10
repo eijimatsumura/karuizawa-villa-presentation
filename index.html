@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>軽井沢別荘 建築提案</title>
+    <meta
+      name="description"
+      content="軽井沢の富裕層向け別荘を縦スクロールで巡るWebプレゼンテーション。"
+    >
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <!--
+      README:
+      このフォルダをWebサーバーに置くか、index.htmlをブラウザで開くと閲覧できます。
+      スライドの追加・編集は script.js の slides 配列を変更してください。
+      画像は images/ フォルダ内で、ファイル名を変更せずに管理してください。
+    -->
+    <main id="presentation" class="presentation" aria-label="軽井沢別荘 建築提案"></main>
+
+    <p class="site-mark" aria-hidden="true">Karuizawa Private Villa</p>
+
+    <div class="deck-controls" aria-label="スライド操作">
+      <button class="deck-button" type="button" data-direction="prev" aria-label="前のスライドへ">
+        Prev
+      </button>
+      <button class="deck-button" type="button" data-direction="next" aria-label="次のスライドへ">
+        Next
+      </button>
+    </div>
+
+    <nav id="slideNav" class="slide-nav" aria-label="現在位置"></nav>
+  </body>
+</html>
