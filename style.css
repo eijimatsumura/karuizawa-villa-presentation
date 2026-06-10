@@ -1,0 +1,353 @@
+:root {
+  color-scheme: dark;
+  --ink: #f6f1e8;
+  --muted: rgba(246, 241, 232, 0.74);
+  --quiet: rgba(246, 241, 232, 0.52);
+  --line: rgba(246, 241, 232, 0.28);
+  --shade: rgba(0, 0, 0, 0.55);
+  --deep: #070806;
+  --button-bg: rgba(7, 8, 6, 0.42);
+  --button-bg-hover: rgba(246, 241, 232, 0.14);
+  --side-space: min(7vw, 96px);
+  --bottom-space: min(10vh, 112px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--deep);
+  color: var(--ink);
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Times New Roman", serif;
+}
+
+body {
+  overflow: hidden;
+}
+
+button {
+  font: inherit;
+}
+
+.presentation {
+  height: 100vh;
+  height: 100svh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  scrollbar-width: none;
+}
+
+.presentation::-webkit-scrollbar {
+  display: none;
+}
+
+.snap-section {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.slide-image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.slide::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.32) 36%, rgba(0, 0, 0, 0.08) 72%),
+    linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.1) 43%, rgba(0, 0, 0, 0.34) 100%);
+  z-index: -1;
+}
+
+.slide-caption {
+  position: absolute;
+  left: var(--side-space);
+  bottom: var(--bottom-space);
+  width: min(520px, calc(100% - 160px));
+  opacity: 0;
+  transition: opacity 720ms ease;
+}
+
+.snap-section.is-active .slide-caption,
+.snap-section.is-active .end-content {
+  opacity: 1;
+}
+
+.slide-title {
+  margin: 0 0 18px;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.slide-description {
+  margin: 0;
+  color: var(--muted);
+  font-family: "Hiragino Sans", "Yu Gothic", "YuGothic", system-ui, sans-serif;
+  font-size: 0.96rem;
+  font-weight: 400;
+  line-height: 2;
+  letter-spacing: 0;
+}
+
+.slide-index {
+  position: absolute;
+  right: var(--side-space);
+  bottom: var(--bottom-space);
+  color: var(--muted);
+  font-family: "Hiragino Sans", "Yu Gothic", "YuGothic", system-ui, sans-serif;
+  font-size: 0.84rem;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.site-mark {
+  position: fixed;
+  top: 32px;
+  left: var(--side-space);
+  z-index: 10;
+  margin: 0;
+  color: rgba(246, 241, 232, 0.72);
+  font-family: "Hiragino Sans", "Yu Gothic", "YuGothic", system-ui, sans-serif;
+  font-size: 0.78rem;
+  line-height: 1;
+  letter-spacing: 0;
+  pointer-events: none;
+}
+
+.deck-controls {
+  position: fixed;
+  top: 24px;
+  right: var(--side-space);
+  z-index: 20;
+  display: flex;
+  gap: 10px;
+}
+
+.deck-button {
+  min-width: 68px;
+  min-height: 38px;
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  background: var(--button-bg);
+  color: var(--ink);
+  cursor: pointer;
+  font-family: "Hiragino Sans", "Yu Gothic", "YuGothic", system-ui, sans-serif;
+  font-size: 0.75rem;
+  line-height: 1;
+  letter-spacing: 0;
+  backdrop-filter: blur(18px);
+}
+
+.deck-button:hover,
+.deck-button:focus-visible {
+  background: var(--button-bg-hover);
+  outline: none;
+}
+
+.deck-button:disabled {
+  color: var(--quiet);
+  cursor: default;
+  opacity: 0.42;
+}
+
+.slide-nav {
+  position: fixed;
+  right: 34px;
+  top: 50%;
+  z-index: 20;
+  display: grid;
+  gap: 12px;
+  transform: translateY(-50%);
+}
+
+.nav-dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: 1px solid rgba(246, 241, 232, 0.52);
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+}
+
+.nav-dot:hover,
+.nav-dot:focus-visible {
+  background: rgba(246, 241, 232, 0.38);
+  outline: none;
+}
+
+.nav-dot.is-active {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.end-slide {
+  display: grid;
+  place-items: center;
+  padding: var(--side-space);
+  background:
+    radial-gradient(circle at 50% 20%, rgba(246, 241, 232, 0.12), transparent 36%),
+    linear-gradient(135deg, #070806 0%, #161a14 52%, #090a08 100%);
+}
+
+.end-slide::before {
+  position: absolute;
+  inset: var(--side-space);
+  border: 1px solid rgba(246, 241, 232, 0.18);
+  content: "";
+}
+
+.end-content {
+  max-width: 760px;
+  opacity: 0;
+  text-align: center;
+  transition: opacity 720ms ease;
+}
+
+.end-kicker {
+  margin: 0 0 30px;
+  color: var(--quiet);
+  font-family: "Hiragino Sans", "Yu Gothic", "YuGothic", system-ui, sans-serif;
+  font-size: 0.78rem;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.end-title {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+.end-subtitle {
+  margin: 26px 0 0;
+  color: var(--muted);
+  font-family: "Hiragino Sans", "Yu Gothic", "YuGothic", system-ui, sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.8;
+  letter-spacing: 0;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --side-space: 42px;
+    --bottom-space: 76px;
+  }
+
+  .slide-title {
+    font-size: 1.7rem;
+  }
+
+  .slide-description {
+    font-size: 0.92rem;
+  }
+
+  .slide-caption {
+    width: min(520px, calc(100% - 120px));
+  }
+
+  .slide-nav {
+    right: 22px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --side-space: 24px;
+    --bottom-space: 104px;
+  }
+
+  .site-mark {
+    top: 22px;
+    font-size: 0.72rem;
+  }
+
+  .deck-controls {
+    top: auto;
+    right: 24px;
+    bottom: 24px;
+  }
+
+  .deck-button {
+    min-width: 64px;
+    min-height: 36px;
+    padding: 0 14px;
+    font-size: 0.72rem;
+  }
+
+  .slide-caption {
+    width: calc(100% - 136px);
+  }
+
+  .slide-title {
+    margin-bottom: 14px;
+    font-size: 1.35rem;
+    line-height: 1.55;
+  }
+
+  .slide-description {
+    max-width: 88%;
+    font-size: 0.86rem;
+    line-height: 1.9;
+  }
+
+  .slide-index {
+    right: 24px;
+    bottom: 82px;
+    font-size: 0.72rem;
+  }
+
+  .slide-nav {
+    top: 26px;
+    right: 24px;
+    grid-auto-flow: column;
+    gap: 8px;
+    transform: none;
+  }
+
+  .nav-dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  .end-title {
+    font-size: 1.45rem;
+  }
+
+  .end-subtitle {
+    font-size: 0.84rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .presentation {
+    scroll-behavior: auto;
+  }
+
+  .slide-caption,
+  .end-content {
+    transition: none;
+  }
+}
