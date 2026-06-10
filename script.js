@@ -54,6 +54,14 @@ function formatNumber(value) {
   return String(value).padStart(2, "0");
 }
 
+function resolvePrimaryImageSource(file) {
+  return `images/${file}`;
+}
+
+function resolveFallbackImageSource(file) {
+  return file;
+}
+
 function createImageSlide(slide, index) {
   const section = document.createElement("section");
   section.className = "snap-section slide";
@@ -62,10 +70,23 @@ function createImageSlide(slide, index) {
 
   const image = document.createElement("img");
   image.className = "slide-image";
-  image.src = `images/${slide.file}`;
+  image.src = resolvePrimaryImageSource(slide.file);
   image.alt = slide.title;
   image.decoding = "async";
   image.loading = index === 0 ? "eager" : "lazy";
+  image.addEventListener(
+    "error",
+    () => {
+      const fallbackSource = resolveFallbackImageSource(slide.file);
+      if (image.dataset.fallbackApplied === "true") {
+        return;
+      }
+
+      image.dataset.fallbackApplied = "true";
+      image.src = fallbackSource;
+    },
+    { once: true }
+  );
 
   const caption = document.createElement("div");
   caption.className = "slide-caption";
